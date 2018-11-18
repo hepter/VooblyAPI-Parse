@@ -28,13 +28,13 @@ Lobby[] lobbies = vapi.getLobbies();
 Finding required lobby and getting third Ladder(RM 1v1) via LinQ
 
 ```
-int rmLobbyid = lobbies.Where(a => a.Name == "RM/DM - Medieval Siege").Single().Ladders[2];
+int rmLadderid = lobbies.Where(a => a.Name == "RM/DM - Medieval Siege").Single().Ladders[2];
 ```
 
 
 Searcing UserID by Name and getting ladder information.
 ```
-int rmRate = vapi.getLadder(rmLobbyid, vapi.findUsers("hepter")[0].Uid)[0].Rating;
+int rmRate = vapi.getLadder(rmLadderid, vapi.findUsers("hepter")[0].Uid)[0].Rating;
 ```
 
 
