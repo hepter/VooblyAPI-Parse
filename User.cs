@@ -37,9 +37,14 @@ namespace VooblyAPI_Parse
         public DateTime Bday { get => bday; set => bday = value; }
         public int Level { get => level; set => level = value; }
         public string Nation { get => nation; set => nation = value; }
-        public string Imagelarge { get => imagelarge; set => imagelarge = value; }
-        public string Imagesmall { get => imagesmall; set => imagesmall = value; }
+        public string Imagelarge { get => VooblyAPI.vooblyUrl + imagelarge; set => imagelarge = value; }
+        public string Imagesmall { get => VooblyAPI.vooblyUrl + imagesmall; set => imagesmall = value; }
         public int TeamID { get => teamID; set => teamID = value; }
+
+        public int[] GetRatingsFromLadderID(int ladderid= 131)
+        {
+            return VooblyAPI.getInstance().getLadder(ladderid, Uid).Select(a => a.Rating).ToArray();
+        }
 
         public User(string rawString)
         {
@@ -62,12 +67,12 @@ namespace VooblyAPI_Parse
             this.bday = new DateTime(yyyy,mm,dd);
             this.level = int.Parse(parts[index++]);
             this.nation = parts[index++];
-            this.imagelarge = VooblyAPI.vooblyUrl + parts[index++];
-            this.imagesmall = VooblyAPI.vooblyUrl + parts[index++];
+            this.imagesmall =  parts[index++].Replace(VooblyAPI.vooblyUrl,"").Replace(VooblyAPI.vooblyUrlSecure, "");
+            this.imagelarge =  parts[index++].Replace(VooblyAPI.vooblyUrl, "").Replace(VooblyAPI.vooblyUrlSecure, "");
             if (!VooblyAPI.getInstance().isSessionValid)
-            {
-                this.imagelarge = defImgLarge;
+            {                
                 this.imagesmall = defImgSmall;
+                this.imagelarge = defImgLarge;
             }
 
             if (!int.TryParse(parts[index++],out this.teamID))            

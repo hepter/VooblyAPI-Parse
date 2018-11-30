@@ -11,7 +11,8 @@ namespace VooblyAPI_Parse
 
     public class VooblyAPI
     {
-        public const string vooblyUrl = @"http://www.voobly.com";
+        public const string vooblyUrl = @"http://voobly.com";
+        public const string vooblyUrlSecure = @"https://voobly.com";
         public static VooblyAPI VAPI;
 
         private const string LoginURLFormat = "https://www.voobly.com/login/auth?username={0}&password={1}";
@@ -63,7 +64,10 @@ namespace VooblyAPI_Parse
 
         public bool isSessionValid { get => sessionIsValid; set => sessionIsValid = value; }
 
-        private VooblyAPI(){}
+        private VooblyAPI()
+        {
+            VAPI = this;
+        }
 
         public VooblyAPI(string apikey) => this.apikey = apikey;
 
